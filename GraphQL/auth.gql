@@ -1,0 +1,16 @@
+fragment userFragment on User {
+  id
+  username
+}
+
+query me {
+  me {
+    ...userFragment
+  }
+}
+
+mutation login($username: String!) {
+  login(username: $username) {
+    ...userFragment
+  }
+}
