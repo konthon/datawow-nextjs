@@ -6,14 +6,22 @@ import {
   Flex,
   Heading,
   Input,
+  Spinner,
   VStack,
 } from '@chakra-ui/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { NextPage } from 'next'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 
+import { request } from '@/libs/graphql-request'
+import { meQuery } from '@/queries/auth'
+
 const SignInPage: NextPage = () => {
+  const router = useRouter()
+
   const {
     register,
     handleSubmit,
@@ -21,9 +29,19 @@ const SignInPage: NextPage = () => {
     reset,
   } = useForm<{ username: string }>({ defaultValues: { username: '' } })
 
-  const onSubmit: Parameters<typeof handleSubmit>[0] = (values) => {
-    console.log(values)
-    reset()
+  const queryClient = useQueryClient()
+  const { mutate, isPending } = useMutation({
+    mutationKey: ['auth', 'login'],
+    mutationFn: request.login,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: meQuery().queryKey })
+      reset()
+      router.push('/')
+    },
+  })
+
+  const onSubmit: Parameters<typeof handleSubmit>[0] = ({ username }) => {
+    mutate({ username })
   }
 
   return (
@@ -75,6 +93,7 @@ const SignInPage: NextPage = () => {
             <Field.Root invalid={!!errors.username}>
               <Input
                 placeholder='Username'
+                color='text'
                 backgroundColor='white'
                 width='full'
                 {...register('username', {
@@ -83,8 +102,8 @@ const SignInPage: NextPage = () => {
               />
               <Field.ErrorText>{errors.username?.message}</Field.ErrorText>
             </Field.Root>
-            <Button type='submit' width='full'>
-              Sign In
+            <Button type='submit' width='full' disabled={isPending}>
+              {isPending ? <Spinner /> : 'Sign In'}
             </Button>
           </VStack>
         </VStack>

@@ -6,17 +6,36 @@ import {
   IconButton,
   List,
   Spacer,
+  Spinner,
   Text,
 } from '@chakra-ui/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { FC } from 'react'
 
 import { ArrowRightIcon, MenuIcon } from '@/components/Icons'
+import { request } from '@/libs/graphql-request'
+import { meQuery } from '@/queries/auth'
 import { NAVBAR_HEIGHT, NAVIGATION } from '@/shared/navigation'
+
+import { Avatar } from '../ui/avatar'
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from '../ui/menu'
+import { useAuth } from '@/hooks/useAuth'
 
 const Header: FC = () => {
   const router = useRouter()
+  const { me, isLoading } = useAuth()
+
+  const queryClient = useQueryClient()
+  const { mutate, isPending } = useMutation({
+    mutationKey: ['auth', 'logout'],
+    mutationFn: () => request.logout(),
+    onSuccess: () => {
+      queryClient.removeQueries({ queryKey: meQuery().queryKey })
+    },
+  })
+
   return (
     <Drawer.Root>
       <HStack
@@ -43,9 +62,33 @@ const Header: FC = () => {
           </Heading>
         </Link>
         <Spacer />
-        <Link href='/sign-in'>
-          <Button hideBelow='md'>Sign In</Button>
-        </Link>
+        {!me && (
+          <Link href='/sign-in'>
+            <Button hideBelow='md' disabled={isLoading}>
+              {isLoading ? <Spinner /> : 'Sign In'}
+            </Button>
+          </Link>
+        )}
+        {me && (
+          <MenuRoot>
+            <MenuTrigger asChild>
+              <Button variant='plain' disabled={isPending}>
+                <Text color='white'>{me.username}</Text>
+                <Avatar name={me.username} size='sm' />
+              </Button>
+            </MenuTrigger>
+            <MenuContent>
+              <MenuItem
+                value='Log out'
+                onClick={() => {
+                  mutate()
+                }}
+              >
+                Log out
+              </MenuItem>
+            </MenuContent>
+          </MenuRoot>
+        )}
         <Drawer.Trigger asChild>
           <IconButton
             aria-label='Open menu'

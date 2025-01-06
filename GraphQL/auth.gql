@@ -14,3 +14,7 @@ mutation login($username: String!) {
     ...userFragment
   }
 }
+
+mutation logout {
+  logout
+}
