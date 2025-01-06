@@ -43,7 +43,9 @@ const Header: FC = () => {
           </Heading>
         </Link>
         <Spacer />
-        <Button hideBelow='md'>Sign In</Button>
+        <Link href='/sign-in'>
+          <Button hideBelow='md'>Sign In</Button>
+        </Link>
         <Drawer.Trigger asChild>
           <IconButton
             aria-label='Open menu'
