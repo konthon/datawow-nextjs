@@ -13,7 +13,7 @@ import { useRouter } from 'next/router'
 import React, { FC } from 'react'
 
 import { ArrowRightIcon, MenuIcon } from '@/components/Icons'
-import { NAVIGATION } from '@/shared/navigation'
+import { NAVBAR_HEIGHT, NAVIGATION } from '@/shared/navigation'
 
 const Header: FC = () => {
   const router = useRouter()
@@ -23,8 +23,14 @@ const Header: FC = () => {
         as='header'
         color='white'
         backgroundColor='green.500'
+        position='fixed'
+        zIndex='sticky'
+        top={0}
+        left={0}
+        right={0}
         px={{ base: 4, lg: 8 }}
         py={{ base: 4, lg: 2.5 }}
+        height={NAVBAR_HEIGHT}
       >
         <Link href='/'>
           <Heading

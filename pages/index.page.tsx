@@ -1,14 +1,10 @@
 import { NextPage } from 'next'
 import React from 'react'
 
-import { Header } from '@/components/Header'
+import { MainLayout } from '@/layouts/MainLayout'
 
 const HomePage: NextPage = () => {
-  return (
-    <div>
-      <Header />
-    </div>
-  )
+  return <MainLayout>sdcsdc</MainLayout>
 }
 
 export default HomePage

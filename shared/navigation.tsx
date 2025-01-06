@@ -24,3 +24,5 @@ export const NAVIGATION: Nav[] = [
     link: '/our-blog',
   },
 ]
+
+export const NAVBAR_HEIGHT = { base: '72px', md: '60px' }
