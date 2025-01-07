@@ -1,5 +1,6 @@
 export { default as ArrowLeftIcon } from './ArrowLeft'
 export { default as ArrowRightIcon } from './ArrowRight'
+export { default as CloseIcon } from './Close'
 export { default as CommentIcon } from './Comment'
 export { default as DeleteIcon } from './Delete'
 export { default as EditIcon } from './Edit'

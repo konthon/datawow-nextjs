@@ -1,0 +1,54 @@
+fragment postFragment on Post {
+  id
+  title
+  content
+  community {
+    id
+    name
+  }
+}
+
+query posts($title: String, $communityId: Int, $authorId: Int) {
+  posts(title: $title, communityId: $communityId, authorId: $authorId) {
+    ...postFragment
+    commentsCount
+    author {
+      username
+    }
+  }
+}
+
+query ourPosts($title: String, $communityId: Int) {
+  ourPosts(title: $title, communityId: $communityId) {
+    ...postFragment
+    commentsCount
+    author {
+      username
+    }
+  }
+}
+
+query post($postId: Int!) {
+  post(postId: $postId) {
+    ...postFragment
+    updatedAt
+  }
+}
+
+mutation createPost($createPostInput: CreatePostInput!) {
+  createPost(createPostInput: $createPostInput) {
+    id
+  }
+}
+
+mutation updatePost($postId: Int!, $updatePostInput: UpdatePostInput!) {
+  updatePost(postId: $postId, updatePostInput: $updatePostInput) {
+    id
+  }
+}
+
+mutation deletePost($postId: Int!) {
+  deletePost(postId: $postId) {
+    id
+  }
+}

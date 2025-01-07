@@ -1,0 +1,6 @@
+query communities {
+  communities {
+    id
+    name
+  }
+}
