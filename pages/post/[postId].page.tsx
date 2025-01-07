@@ -19,6 +19,7 @@ import { postQuery } from '@/queries/post'
 import { getRelativeTime } from '@/shared/time'
 
 import { AddComment } from './components/AddComment'
+import { Comments } from './components/Comments'
 
 const PostPage: NextPage = () => {
   const router = useRouter()
@@ -78,6 +79,8 @@ const PostPage: NextPage = () => {
           <Box mt={{ base: 7, lg: 8 }} mb={6}>
             <AddComment />
           </Box>
+
+          <Comments />
         </Box>
       </Container>
     </MainLayout>
