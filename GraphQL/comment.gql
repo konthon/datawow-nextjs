@@ -1,0 +1,18 @@
+query comments($postId: Int!) {
+  post(postId: $postId) {
+    comments {
+      id
+      content
+      updatedAt
+      user {
+        username
+      }
+    }
+  }
+}
+
+mutation addComment($postId: Int!, $commentInput: CommentInput!) {
+  addComment(postId: $postId, commentInput: $commentInput) {
+    id
+  }
+}

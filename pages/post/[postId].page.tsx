@@ -18,13 +18,16 @@ import { MainLayout } from '@/layouts/MainLayout'
 import { postQuery } from '@/queries/post'
 import { getRelativeTime } from '@/shared/time'
 
+import { AddComment } from './components/AddComment'
+
 const PostPage: NextPage = () => {
   const router = useRouter()
-  const postId = router.query.postId as string
+  const rawPostId = router.query.postId as string
+  const postId = !Number.isNaN(+rawPostId) ? +rawPostId : undefined
 
   const { data } = useQuery({
-    ...postQuery({ postId: !!postId ? +postId : 0 }),
-    enabled: !Number.isNaN(+postId),
+    ...postQuery({ postId: postId! }),
+    enabled: !!postId,
   })
 
   return (
@@ -70,6 +73,10 @@ const PostPage: NextPage = () => {
               <CommentIcon boxSize='12px' />
               <Text fontSize='xs'>{`${data?.post?.commentsCount.toLocaleString()} comments`}</Text>
             </HStack>
+          </Box>
+
+          <Box mt={{ base: 7, lg: 8 }} mb={6}>
+            <AddComment />
           </Box>
         </Box>
       </Container>
