@@ -61,6 +61,8 @@ const FilterBar: FC = () => {
       >
         <Input
           placeholder='Search'
+          type='search'
+          enterKeyHint='search'
           onChange={(e) => onTitleChange(e.target.value)}
           onBlur={() => toggleSearch(false)}
         />

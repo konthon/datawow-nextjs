@@ -72,7 +72,7 @@ const Header: FC = () => {
         {me && (
           <MenuRoot>
             <MenuTrigger asChild>
-              <Button variant='plain' disabled={isPending}>
+              <Button variant='plain' disabled={isPending} hideBelow='md'>
                 <Text color='white'>{me.username}</Text>
                 <Avatar name={me.username} size='sm' />
               </Button>
