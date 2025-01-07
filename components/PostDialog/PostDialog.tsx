@@ -14,7 +14,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import React, { FC, useEffect, useRef } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { CreatePostInput, Post } from '@/GraphQL/_generated'
+import { CreatePostInput } from '@/GraphQL/_generated'
 import { request } from '@/libs/graphql-request'
 import { communitiesQuery } from '@/queries/community'
 import { ourPostsQuery, postQuery, postsQuery } from '@/queries/post'
@@ -27,11 +27,9 @@ import {
   SelectTrigger,
   SelectValueText,
 } from '../ui/select'
+import { usePostDialogStore } from './usePostDialog'
 
-interface Props extends Omit<Dialog.RootProps, 'children'> {
-  postId?: Post['id']
-  onClose: () => void
-}
+interface Props extends Omit<Dialog.RootProps, 'children'> {}
 
 const defaultValues: Partial<CreatePostInput> = {
   title: '',
@@ -39,7 +37,10 @@ const defaultValues: Partial<CreatePostInput> = {
 }
 
 const PostDialog: FC<Props> = (props) => {
-  const { postId, onClose, ...restProps } = props
+  const open = usePostDialogStore((state) => state.open)
+  const postId = usePostDialogStore((state) => state.postId)
+  const onClose = usePostDialogStore((state) => state.onClose)
+
   const dialogContentRef = useRef<HTMLDivElement>(null)
 
   const { data: communitiesData } = useQuery(communitiesQuery())
@@ -109,11 +110,12 @@ const PostDialog: FC<Props> = (props) => {
   return (
     <Dialog.Root
       size='lg'
+      open={open}
       onOpenChange={onClose}
       onExitComplete={() => {
         reset(defaultValues)
       }}
-      {...restProps}
+      {...props}
     >
       <Dialog.Backdrop />
       <Dialog.Positioner>

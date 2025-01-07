@@ -1,4 +1,4 @@
-import { Box, Stack, useDisclosure } from '@chakra-ui/react'
+import { Box, Stack } from '@chakra-ui/react'
 import { useQuery } from '@tanstack/react-query'
 import { NextPage } from 'next'
 import Link from 'next/link'
@@ -13,8 +13,6 @@ import { postsQuery } from '@/queries/post'
 import { SIDEBAR_WIDTH } from '@/shared/navigation'
 
 const HomePage: NextPage = () => {
-  const { open, onClose } = useDisclosure()
-
   const postFilter = usePostFilter()
   const { data } = useQuery(postsQuery(postFilter))
 
@@ -46,7 +44,7 @@ const HomePage: NextPage = () => {
           </Stack>
         </Box>
       </MainLayout>
-      <PostDialog open={open} onClose={onClose} />
+      <PostDialog />
     </>
   )
 }
