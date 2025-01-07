@@ -7,8 +7,10 @@ import {
   Input,
 } from '@chakra-ui/react'
 import { useQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/router'
 import React, { FC, useState } from 'react'
 
+import { useAuth } from '@/hooks/useAuth'
 import { communitiesQuery } from '@/queries/community'
 
 import { SearchIcon } from '../Icons'
@@ -24,6 +26,9 @@ import {
 import { usePostFilterStore } from './usePostFilter'
 
 const FilterBar: FC = () => {
+  const router = useRouter()
+  const { isLoading, isLoggedIn } = useAuth()
+
   const [openMobileSearch, toggleSearch] = useState(false)
 
   const onOpen = usePostDialogStore((state) => state.onOpen)
@@ -88,7 +93,17 @@ const FilterBar: FC = () => {
         </SelectContent>
       </SelectRoot>
 
-      <Button onClick={() => onOpen()} hidden={openMobileSearch}>
+      <Button
+        onClick={() => {
+          if (!isLoading && !isLoggedIn) {
+            router.push('/sign-in')
+          } else {
+            onOpen()
+          }
+        }}
+        hidden={openMobileSearch}
+        disabled={isLoading}
+      >
         Create +
       </Button>
     </HStack>
