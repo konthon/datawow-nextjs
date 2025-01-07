@@ -6,25 +6,21 @@ fragment postFragment on Post {
     id
     name
   }
+  commentsCount
+  author {
+    username
+  }
 }
 
 query posts($title: String, $communityId: Int, $authorId: Int) {
   posts(title: $title, communityId: $communityId, authorId: $authorId) {
     ...postFragment
-    commentsCount
-    author {
-      username
-    }
   }
 }
 
 query ourPosts($title: String, $communityId: Int) {
   ourPosts(title: $title, communityId: $communityId) {
     ...postFragment
-    commentsCount
-    author {
-      username
-    }
   }
 }
 
