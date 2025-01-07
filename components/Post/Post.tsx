@@ -31,7 +31,7 @@ const Post: FC<Props> = (props) => {
       <HStack mt={2} gap={1}>
         <CommentIcon color='gray.300' boxSize='12px' />
         <Text color='gray.300' fontSize='xs'>
-          {`${commentsCount.toLocaleString('th')} comments`}
+          {`${commentsCount.toLocaleString()} comments`}
         </Text>
       </HStack>
     </Box>

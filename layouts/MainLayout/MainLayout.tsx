@@ -32,7 +32,7 @@ const MainLayout: FC<Props> = (props) => {
             px={4}
             hideBelow='md'
           >
-            <List.Root mt={8}>
+            <List.Root pt={8} position='sticky' top={NAVBAR_HEIGHT} left={0}>
               {NAVIGATION.map((nav) => {
                 const isMatched = router.pathname === nav.link
                 return (

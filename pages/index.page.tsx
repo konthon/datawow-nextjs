@@ -4,6 +4,7 @@ import { NextPage } from 'next'
 import Link from 'next/link'
 import React from 'react'
 
+import { FilterBar, usePostFilter } from '@/components/FilterBar'
 import { Post } from '@/components/Post'
 import { PostDialog } from '@/components/PostDialog'
 import { MainLayout } from '@/layouts/MainLayout'
@@ -14,7 +15,8 @@ import { SIDEBAR_WIDTH } from '@/shared/navigation'
 const HomePage: NextPage = () => {
   const { open, onClose } = useDisclosure()
 
-  const { data } = useQuery(postsQuery())
+  const postFilter = usePostFilter()
+  const { data } = useQuery(postsQuery(postFilter))
 
   // prefetch
   useQuery(communitiesQuery())
@@ -27,6 +29,7 @@ const HomePage: NextPage = () => {
           pr={SIDEBAR_WIDTH}
           py={{ base: 12, lg: 8 }}
         >
+          <FilterBar />
           <Stack
             as='section'
             gap={0}

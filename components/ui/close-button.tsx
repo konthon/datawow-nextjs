@@ -12,7 +12,7 @@ export const CloseButton = React.forwardRef<
 >(function CloseButton(props, ref) {
   return (
     <ChakraIconButton variant='ghost' aria-label='Close' ref={ref} {...props}>
-      {props.children ?? <CloseIcon />}
+      {props.children ?? <CloseIcon boxSize='12px' />}
     </ChakraIconButton>
   )
 })
