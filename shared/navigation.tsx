@@ -26,3 +26,4 @@ export const NAVIGATION: Nav[] = [
 ]
 
 export const NAVBAR_HEIGHT = { base: '72px', md: '60px' }
+export const SIDEBAR_WIDTH = { lg: '280px' }

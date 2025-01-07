@@ -13,7 +13,7 @@ import { useRouter } from 'next/router'
 import React, { FC } from 'react'
 
 import { Header } from '@/components/Header'
-import { NAVBAR_HEIGHT, NAVIGATION } from '@/shared/navigation'
+import { NAVBAR_HEIGHT, NAVIGATION, SIDEBAR_WIDTH } from '@/shared/navigation'
 
 interface Props extends BoxProps {}
 
@@ -27,7 +27,7 @@ const MainLayout: FC<Props> = (props) => {
         <Flex width='full' minHeight='100dvh' pt={NAVBAR_HEIGHT}>
           <Box
             as='aside'
-            flexBasis='280px'
+            flexBasis={SIDEBAR_WIDTH}
             backgroundColor='gray.100'
             px={4}
             hideBelow='md'
