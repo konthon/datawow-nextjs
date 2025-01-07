@@ -155,8 +155,15 @@ const PostDialog: FC<Props> = (props) => {
                         }
                         onInteractOutside={field.onBlur}
                       >
-                        <SelectTrigger>
-                          <SelectValueText placeholder='Choose a community' />
+                        <SelectTrigger
+                          borderWidth='1px'
+                          borderColor='success'
+                          borderRadius='md'
+                        >
+                          <SelectValueText
+                            placeholder='Choose a community'
+                            color='success'
+                          />
                         </SelectTrigger>
                         <SelectContent portalRef={dialogContentRef}>
                           {communities.items.map((community) => (

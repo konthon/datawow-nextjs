@@ -28,6 +28,8 @@ const MainLayout: FC<Props> = (props) => {
           <Box
             as='aside'
             flexBasis={SIDEBAR_WIDTH}
+            width={SIDEBAR_WIDTH}
+            flexShrink={0}
             backgroundColor='gray.100'
             px={4}
             hideBelow='md'
