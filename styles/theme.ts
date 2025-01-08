@@ -1,4 +1,44 @@
-import { createSystem, defaultConfig, defineConfig } from '@chakra-ui/react'
+import {
+  createSystem,
+  defaultConfig,
+  defineConfig,
+  defineRecipe,
+} from '@chakra-ui/react'
+
+const buttonRecipe = defineRecipe({
+  variants: {
+    variant: {
+      primary: {
+        bg: 'success',
+        color: 'white',
+        _hover: {
+          bg: 'success/90',
+        },
+        _expanded: {
+          bg: 'success/90',
+        },
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'primary',
+  },
+})
+
+const badgeRecipe = defineRecipe({
+  variants: {
+    variant: {
+      subtle: {
+        bg: 'blackAlpha.100',
+        color: 'gray.500',
+        px: 2,
+        py: 1,
+        rounded: 'full',
+        fontSize: 'xs',
+      },
+    },
+  },
+})
 
 const config = defineConfig({
   theme: {
@@ -30,6 +70,10 @@ const config = defineConfig({
         Inter: { value: 'var(--font-inter)' },
         Castoro: { value: 'var(--font-castoro)' },
       },
+    },
+    recipes: {
+      button: buttonRecipe,
+      badge: badgeRecipe,
     },
   },
 })

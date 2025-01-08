@@ -61,6 +61,7 @@ const DeletePostDialog: FC = () => {
             <Button
               flexGrow={1}
               colorPalette='red'
+              variant='solid'
               onClick={() => mutate()}
               disabled={isPending}
             >
