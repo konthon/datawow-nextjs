@@ -1,40 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Datawow assignment - Frontend - NextJS
 
-## Getting Started
+## ภาพรวม
 
-First, run the development server:
+NextJS (page router) + GraphQL
+
+ไม่มีการทำ git flow เนื่องจากเป็น assignment ครับ
+
+### Libraries
+
+- GraphQL - connect backend APIs with fully typed
+- tanstack/query - query caching
+- Chakra UI v3 - styling all components
+  - components inside `components/ui/*` folder comes from Chakra CLI generated
+- zustand - state management e.g. dialog states
+
+### Structure
+
+ผมเลือกใช้ Page router ในการสร้างหน้าแต่ละหน้า โดยมี page extension `.page.tsx` ระบุไฟล์ของหน้านั้น และสร้าง components ที่ใช้เฉพาะหน้านั้นๆ ได้สะดวกใน folder ได้เลยครับ
+
+- components folder - ใช้เก็บ global components ที่ใช้ร่วมกัน
+  - `components/ui` มาจากการ generate ของ Chakra CLI เพื่อตั้งต้น base component ใน version 3
+- GraphQL folder - เก็บ graphQL queries/mutation ที่ต้องการใช้งาน
+  - `_generated.ts` เป็นไฟล์ที่ถูกสร้างหลังจาก graphql-codegen แปลงจาก graphql files เป็น typescript สำหรับใช้ในโปรเจ็คต่อ
+    - ใช้คำสั่ง `npm run graphql:generate` ในการสร้างไฟล์นี้
+- hooks folder - เก็บ react hooks ที่ไว้ใช้ร่วมกัน
+- layouts folder - เก็บ layout components
+- libs folder
+  - graphql-codegen - graphQL codegen configuration file
+  - graphql-request - base client request function for calling graphQL query/mutation wrapped with SDK from graphql-codegen
+- pages folder - หน้าแต่ละหน้าของโปรเจ็คนี้
+- queries folder - ตัวตั้งต้น queries ของ tanstack/query เพื่อใช้ร่วมกันทั้งโปรเจ็ค และสะดวกต่อการ manage queries เช่น การ invalidate queries เป็นต้น
+- shared folder - รวม constants และ utility functions ที่ใช้ร่วมกันได้
+- styles folder - สำหรับกำหนด base UI ของ Chakra UI โดยในที่นี้มีการ custom ในส่วนของสี และ components บางส่วน
+
+### Expected Improvements
+
+เนื่องจากมีเวลาจำกัด ผมมีสิ่งที่คิดไว้เพิ่มเติม เพื่อให้โปรเจ็คนี้สมบูรณ์มากยิ่งขึ้นครับ
+
+- cache pages โดยวิธี SSG หรือเปลี่ยนไปใช้ app router ของ nextJS เพื่อเพิ่มประสิทธิภาพการแสดงผล content และ SEO
+- จัดการ/refactor base styles ของ Chakra UI ให้ดีกว่านี้
+- เพิ่ม lint ให้มีมาตรฐาน (code standard) ยิ่งขึ้น
+
+## ขั้นตอนการติดตั้ง
+
+### Requirements
+
+- `NodeJS` v18 ขึ้นไป (LTS)
+- `NPM` for Package Manager
+
+### การติดตั้ง
+
+1. ลง dependencies ของโปรเจ็คนี้
+
+```bash
+npm install
+```
+
+> [!IMPORTANT]
+> รันโปรเจ็คหลังบ้าน (datawow-nestjs) ก่อน
+
+2. รันโปรเจ็ค
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+3. เปิด http://localhost:3000 เพื่อเริ่มการใช้งาน
