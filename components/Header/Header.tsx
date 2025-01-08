@@ -15,13 +15,14 @@ import { useRouter } from 'next/router'
 import React, { FC } from 'react'
 
 import { ArrowRightIcon, MenuIcon } from '@/components/Icons'
+import { useAuth } from '@/hooks/useAuth'
 import { request } from '@/libs/graphql-request'
 import { meQuery } from '@/queries/auth'
+import { ourPostsQuery } from '@/queries/post'
 import { NAVBAR_HEIGHT, NAVIGATION } from '@/shared/navigation'
 
 import { Avatar } from '../ui/avatar'
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from '../ui/menu'
-import { useAuth } from '@/hooks/useAuth'
 
 const Header: FC = () => {
   const router = useRouter()
@@ -33,6 +34,7 @@ const Header: FC = () => {
     mutationFn: () => request.logout(),
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: meQuery().queryKey })
+      queryClient.removeQueries({ queryKey: ourPostsQuery().queryKey })
     },
   })
 
