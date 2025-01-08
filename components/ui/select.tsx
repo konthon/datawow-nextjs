@@ -54,12 +54,8 @@ export const SelectContent = React.forwardRef<
 >(function SelectContent(props, ref) {
   const { portalled = true, portalRef, ...rest } = props
   return (
-    <Portal
-      disabled={!portalled}
-      container={
-        portalRef?.current ? { current: portalRef.current } : undefined
-      }
-    >
+    // @ts-expect-error broken type from Chakra UI
+    <Portal disabled={!portalled} container={portalRef}>
       <ChakraSelect.Positioner>
         <ChakraSelect.Content {...rest} ref={ref} />
       </ChakraSelect.Positioner>

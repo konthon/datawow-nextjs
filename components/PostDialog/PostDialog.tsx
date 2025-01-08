@@ -214,6 +214,7 @@ const PostDialog: FC<Props> = (props) => {
                   borderColor='success'
                   color='success'
                   disabled={isCreating || isUpdating}
+                  onClick={onClose}
                 >
                   Cancel
                 </Button>

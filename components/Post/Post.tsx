@@ -1,18 +1,39 @@
-import { Badge, Box, Heading, HStack, Stack, Text } from '@chakra-ui/react'
+import {
+  Badge,
+  Box,
+  Heading,
+  HStack,
+  IconButton,
+  Stack,
+  Text,
+} from '@chakra-ui/react'
 import React, { FC } from 'react'
 
 import { PostsQuery } from '@/GraphQL/_generated'
 
 import { Avatar } from '../ui/avatar'
-import { CommentIcon } from '../Icons'
+import { CommentIcon, DeleteIcon, EditIcon } from '../Icons'
 
 type Post = PostsQuery['posts'][number]
-interface Props extends Post {}
+interface Props extends Post {
+  onEdit?: (postId: Post['id']) => void
+  onDelete?: (postId: Post['id']) => void
+}
 
 const Post: FC<Props> = (props) => {
-  const { title, content, author, community, commentsCount } = props
+  const {
+    id,
+    title,
+    content,
+    author,
+    community,
+    commentsCount,
+    onEdit,
+    onDelete,
+  } = props
+
   return (
-    <Box as='article' p={5} backgroundColor='white'>
+    <Box as='article' p={5} backgroundColor='white' position='relative'>
       <HStack mb={4}>
         <Avatar name={author.username} />
         <Text color='gray.300' fontSize='sm' fontWeight={500}>
@@ -33,6 +54,39 @@ const Post: FC<Props> = (props) => {
         <Text color='gray.300' fontSize='xs'>
           {`${commentsCount.toLocaleString()} comments`}
         </Text>
+      </HStack>
+
+      <HStack position='absolute' top={5} right={5}>
+        {onEdit && (
+          <IconButton
+            aria-label='Edit'
+            variant='ghost'
+            colorPalette='green'
+            color='green.300'
+            size='xs'
+            onClick={(e) => {
+              e.preventDefault()
+              onEdit(id)
+            }}
+          >
+            <EditIcon />
+          </IconButton>
+        )}
+        {onDelete && (
+          <IconButton
+            aria-label='Delete'
+            variant='ghost'
+            colorPalette='green'
+            color='green.300'
+            size='xs'
+            onClick={(e) => {
+              e.preventDefault()
+              onDelete(id)
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        )}
       </HStack>
     </Box>
   )

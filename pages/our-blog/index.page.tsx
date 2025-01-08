@@ -10,8 +10,14 @@ import { Post } from '@/components/Post'
 import { PostDialog, usePostDialogStore } from '@/components/PostDialog'
 import { useAuth } from '@/hooks/useAuth'
 import { MainLayout } from '@/layouts/MainLayout'
+import { communitiesQuery } from '@/queries/community'
 import { ourPostsQuery } from '@/queries/post'
 import { SIDEBAR_WIDTH } from '@/shared/navigation'
+
+import {
+  DeletePostDialog,
+  useDeletePostDialogStore,
+} from './components/DeletePostDialog'
 
 const OurBlogPage: NextPage = () => {
   const router = useRouter()
@@ -21,6 +27,10 @@ const OurBlogPage: NextPage = () => {
   const { data } = useQuery(ourPostsQuery(postFilter))
 
   const onOpenPost = usePostDialogStore((state) => state.onOpen)
+  const onOpenDeletePost = useDeletePostDialogStore((state) => state.onOpen)
+
+  // prefetch
+  useQuery(communitiesQuery())
 
   useEffect(() => {
     if (!isLoading && !isLoggedIn) {
@@ -47,13 +57,22 @@ const OurBlogPage: NextPage = () => {
           >
             {data?.ourPosts.map((post) => (
               <Link key={post.id} href={`/post/${post.id}`}>
-                <Post {...post} />
+                <Post
+                  {...post}
+                  onEdit={() => {
+                    onOpenPost(post.id)
+                  }}
+                  onDelete={() => {
+                    onOpenDeletePost(post.id)
+                  }}
+                />
               </Link>
             ))}
           </Stack>
         </Box>
       </MainLayout>
       <PostDialog />
+      <DeletePostDialog />
     </>
   )
 }
